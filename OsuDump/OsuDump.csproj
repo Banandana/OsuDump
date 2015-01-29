@@ -58,7 +58,6 @@
     <Compile Include="OsuBundle.cs" />
     <Compile Include="OsuCollection.cs" />
     <Compile Include="OsuCollectionReader.cs" />
-    <Compile Include="OsuExtractor.cs" />
     <Compile Include="OsuMapReader.cs" />
     <Compile Include="OsuSong.cs" />
     <Compile Include="OsuSongParser.cs" />
