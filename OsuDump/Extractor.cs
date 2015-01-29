@@ -211,6 +211,12 @@ namespace OsuDump
         {
             DirectoryInfo SongDirectory = new DirectoryInfo(SongsPathBox.Text);
 
+            //Create the collection list
+            if (OsuCollections != null)
+            {
+                PopulateCollectionData();
+            }
+
             //Get individual bundle directories
             DirectoryInfo[] BundleDirectories = SongDirectory.GetDirectories();
             for (int q = 0; q < BundleDirectories.Length; q++)
@@ -242,16 +248,27 @@ namespace OsuDump
 
                         Song.CollectionsContainedIn = new List<string>();
 
+                        //Go through each collection
+                        foreach (OsuCollection collection in OsuCollections)
+                        { 
+                            //Go through each hash in the collection
+                            foreach (string hash in collection.Hashes)
+                            {
+                                //If the song hash matches any hash, associate eachother
+                                if (Song.MapHash == hash)
+                                {
+                                    //Add the collection name to the list of collections the song is contained in
+                                    if (!Song.CollectionsContainedIn.Contains(collection.Name))
+                                        Song.CollectionsContainedIn.Add(collection.Name);
+                                }
+                            }
+                        }
+
                         CurrentBundle.Songs.Add(Song);
                         if (CurrentBundle.SongName == null) CurrentBundle.SongName = Song.SongName;
                     }
                 }
                 OsuBundles.Add(CurrentBundle);
-            }
-
-            if (OsuCollections != null)
-            {
-                PopulateCollectionData();
             }
 
             Log("Finished parsing all data");
@@ -361,8 +378,6 @@ namespace OsuDump
 
         private void ExportSongsButton_Click(object sender, EventArgs e)
         {
-
-
             if (OutputPathBox.Text == "" || !Directory.Exists(OutputPathBox.Text))
             {
                 MessageBox.Show("Error: Sorted output directory path not valid.", "ERROR");

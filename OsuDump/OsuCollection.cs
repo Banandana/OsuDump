@@ -8,13 +8,18 @@ namespace OsuDump
 {
     class OsuCollection
     {
-        string CollectionName;
-        List<string> Hashes;
-
-        public OsuCollection(String Name)
+        public OsuCollection(String _name)
         {
-            CollectionName = Name;
+            CollectionName = _name;
             Hashes = new List<string>();
+        }
+
+        string CollectionName;
+
+        public List<string> Hashes
+        {
+            get;
+            set;
         }
 
         public string Name

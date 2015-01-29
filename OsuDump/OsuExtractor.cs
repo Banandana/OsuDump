@@ -10,13 +10,15 @@ namespace OsuDump
     {
         string OsuPath;
         List<OsuBundle> OsuBundles;
-        public OsuExtractor(string OsuFolder, string OutFolder)
+
+        //TO DO: Remove this function, it's not used
+        private OsuExtractor(string OsuFolder, string OutFolder, List<OsuCollection> OsuCollections)
         {
             Console.WriteLine("Osu Folder is " + OsuFolder);
             OsuPath = OsuFolder;
 
             Console.WriteLine("Beginning parsing of Osu song bundles");
-            OsuBundles = OsuSongParser.ParseAllSongs(Environment.CurrentDirectory);
+            OsuBundles = OsuSongParser.ParseAllSongs(Environment.CurrentDirectory, OsuCollections);
 
             if (!Directory.Exists(OutFolder)) Directory.CreateDirectory(OutFolder);
 
@@ -55,14 +57,6 @@ namespace OsuDump
                     }
                 }
             }
-            Console.WriteLine("FINISHED!");
-            Console.ReadLine();
-
-
-
-
-
-
         }
 
     }

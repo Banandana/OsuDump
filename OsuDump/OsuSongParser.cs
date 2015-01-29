@@ -67,13 +67,15 @@ namespace OsuDump
             }
         }
 
-        public static List<OsuBundle> ParseAllSongs(string SongsPath)
+        public static List<OsuBundle> ParseAllSongs(string SongsPath, List<OsuCollection> Collections)
         {
             List<OsuBundle> OsuBundles = new List<OsuBundle>();
 
             //Console.WriteLine("Reading Collections.db...");
             //Parse the collections database
             //List<OsuCollection> Collections = OsuCollectionReader.GetCollections(OsuPath + "\\collection.db");
+
+
 
             Console.WriteLine("Getting individual beatmap information...");
             //Get song directory
@@ -108,17 +110,17 @@ namespace OsuDump
 
                         Song.CollectionsContainedIn = new List<string>();
 
-                        //for (int x = 0; x < Collections.Count; x++)
-                        //{
-                        //    for (int y = 0; y < Collections[x].GetHashCount(); y++)
-                        //    {
-                        //        if (Song.MapHash == Collections[x].GetHashByIndex(y))
-                        //        {
-                        //            Song.CollectionsContainedIn.Add(Collections[x].Name);
-                        //            break;
-                        //        }
-                        //    }
-                        //}
+                        for (int x = 0; x < Collections.Count; x++)
+                        {
+                            for (int y = 0; y < Collections[x].GetHashCount(); y++)
+                            {
+                                if (Song.MapHash == Collections[x].GetHashByIndex(y))
+                                {
+                                    Song.CollectionsContainedIn.Add(Collections[x].Name);
+                                    break;
+                                }
+                            }
+                        }
 
                         CurrentBundle.Songs.Add(Song);
                         if (CurrentBundle.SongName == null) CurrentBundle.SongName = Song.SongName;
